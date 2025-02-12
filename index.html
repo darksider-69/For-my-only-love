@@ -3,22 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Valentine?</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap">
-    <link rel="stylesheet" href="style.css"> <!-- Link to external stylesheet -->
+    <title>Valentine's Question 💖</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: pink;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #questionContainer {
+            position: relative;
+            width: 320px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        #yesBtn {
+            background-color: lightgreen;
+        }
+        #noBtn {
+            background-color: lightcoral;
+            position: absolute;
+        }
+        #heartLoader {
+            display: none;
+            font-size: 24px;
+            color: red;
+        }
+        #resultContainer {
+            display: none;
+            font-size: 20px;
+            margin-top: 20px;
+            color: darkred;
+        }
+        img {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        input {
+            margin-top: 20px;
+            padding: 8px;
+            width: 250px;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div id="container">
-        <div id="image-container"></div> <!-- Container for displaying images -->
-        <div id="text-container">
-            <div id="question">Can you be my valentine's?</div> <!-- Question -->
-            <div id="options">
-                <button id="yes-button" onclick="selectOption('yes')">Yes</button> <!-- Yes button -->
-                <button id="no-button" onclick="selectOption('no')">No</button> <!-- No button -->
-            </div>
+
+    <div id="questionContainer">
+        <h2>Will you be my Valentine? ❤️</h2>
+        <div id="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- Link to external JavaScript file -->
+    <div id="heartLoader">❤️ Loading... ❤️</div>
+    <div id="resultContainer">
+        <h2>Yay! 🥰💖</h2>
+        <img id="valentineImage" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGw3ZWNtdmJ6emNkaWN6eWxtaTV3eWtoN2tqbDE1eGl5cWRsZDExMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/19JViX6cEexrSqGQkh/giphy.gif" alt="Valentine's Love Gif">
+        <br>
+        <input type="text" id="imageURL" placeholder="Paste your image link here...">
+        <button onclick="updateImage()">Set Image</button>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById("noBtn");
+        const yesBtn = document.getElementById("yesBtn");
+        const heartLoader = document.getElementById("heartLoader");
+        const resultContainer = document.getElementById("resultContainer");
+        const valentineImage = document.getElementById("valentineImage");
+        const imageURL = document.getElementById("imageURL");
+
+        // Moving "No" button randomly when hovered
+        noBtn.addEventListener("mouseover", () => {
+            const newX = Math.floor(Math.random() * (window.innerWidth - 150));
+            const newY = Math.floor(Math.random() * (window.innerHeight - 150));
+
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        });
+
+        // Clicking "Yes" shows the result after a delay
+        yesBtn.addEventListener("click", () => {
+            heartLoader.style.display = "block"; // Show loading animation
+
+            setTimeout(() => {
+                heartLoader.style.display = "none";
+                resultContainer.style.display = "block";
+            }, 2000); // 2-second delay
+        });
+
+        // Function to update the image from input link
+        function updateImage() {
+            const newImage = imageURL.value.trim();
+            if (newImage) {
+                valentineImage.src = newImage;
+            } else {
+                alert("Please enter a valid image URL!");
+            }
+        }
+    </script>
+
 </body>
 </html>
